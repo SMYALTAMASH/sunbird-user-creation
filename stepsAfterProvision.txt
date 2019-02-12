@@ -1,0 +1,108 @@
+# Steps After completion:-
+# 1> Copy user creation script to cassandra and change vars 
+# 2> Validate the vars and run the user creation script
+# 3> map the user created with appropriate roles
+
+Channel ID is "0126967773240442880"
+UserID: "230297f4-0753-4cb9-8584-caa5b75e57ff"
+
+# If user creation Failed for some strange reason
+curl -X POST https://sunbirditer6.tk/api/user/v1/create                  -H 'Cache-Control: no-cache'                  -H 'Content-Type: application/json'                  -H 'accept: application/json'                  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiNDJjNjYzNWUwZjA0Y2I2OWJmNTAxMzk0OGM3ZjM4NSJ9.jO0GR089E2uNCC7KHtNn8qIniJp0uqD46yE4pPwF5Kc'                  -d '{               
+                         "request": {
+                             "firstName":"admins",
+                             "lastName":"admins",
+                             "userName":"admins",
+                             "password":"admins",
+                             "email":"test@mydomain.com",
+                             "phone":"8090809080",
+                             "channel": "admin",
+                             "emailVerified": true,
+                             "phoneVerified": true
+                         }
+                     }'
+
+### 
+
+curl -s -X POST  https://sunbirditer6.tk/auth/realms/sunbird/protocol/openid-connect/token   -H 'cache-control: no-cache'   -H 'content-type: application/x-www-form-urlencoded'   -H 'postman-token: 15d3852b-de08-ea78-3342-bfaf5d4d4f09'  --data  "client_id=admin-cli&username=admin&password=admin&grant_type=password" | jq -r '.access_token'
+
+
+###
+curl -X POST \
+  https://sunbirditer6.tk/api/user/v1/role/assign \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiNDJjNjYzNWUwZjA0Y2I2OWJmNTAxMzk0OGM3ZjM4NSJ9.jO0GR089E2uNCC7KHtNn8qIniJp0uqD46yE4pPwF5Kc' \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 9c0f9079-7d1c-4080-936b-e27f18c70576' \
+  -H 'X-Consumer-ID: X-Consumer-ID' \
+  -H 'X-msgid: 8e27cbf5-e299-43b0-bca7-8347f7e5abcf' \
+  -H 'cache-control: no-cache' \
+  -H "x-authenticated-user-token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyYnd5aXlxY3dteVBoVGE4UFZWSWR4ZmxmeUxlQ0VMYUJjNXluemRhdXpZIn0.eyJqdGkiOiI5NWExNjkzMS1iZWY2LTQ1MjctYWRjZC1hMjY3OTI2Y2E1YTgiLCJleHAiOjE1NDk5MjA5ODksIm5iZiI6MCwiaWF0IjoxNTQ5ODk5Mzg5LCJpc3MiOiJodHRwczovL3N1bmJpcmRpdGVyNi50ay9hdXRoL3JlYWxtcy9zdW5iaXJkIiwiYXVkIjoiYWRtaW4tY2xpIiwic3ViIjoiOTEwNzQ1ODktYjFmOS00NGFkLWFlYzgtZGNiYzM1MTdhNWUzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tY2xpIiwiYXV0aF90aW1lIjowLCJzZXNzaW9uX3N0YXRlIjoiZGI5MTYyMTktODEzMC00Y2YyLTgxYWQtYTQ5ZGVhNTAyMjgxIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJlYWxtLW1hbmFnZW1lbnQiOnsicm9sZXMiOlsibWFuYWdlLXVzZXJzIiwidmlldy11c2VycyIsInF1ZXJ5LWdyb3VwcyIsInF1ZXJ5LXVzZXJzIl19fSwibmFtZSI6InRlc3QgdGVzdCIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6InRlc3QiLCJmYW1pbHlfbmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.FVVc0Xw6gPaT9z3kCauZ9_12Uqf5OZsUc6poNIZqmNa9wuNbjSubimhfkRKYBdEzGU_vu9xVDiKaFuEIjK4p8Q9tjYy7vJoooZNz277vuh-BmDiV1kcdxEEzfi6JYH9_UxPY0lGyxHXwW07r3uv7eQkupErI1Ri1SZZh_lSzqu9T96v8-GW9KucWK-h4-rrMjD5r_QkwvfyzSf3H8M1ZFXq2lCkqbo5g-YwOqY-fcwHV1YmdYULJJI58XAg6bRd4IJ_KYCuASVvQVABI9yllh2InnxSJsfuASEWFGQis0J0VCJeb3yTayQQj9AJAQqiugChJeo6TqSv3AeFTbOzQmg" \
+  -d '{
+    "request": {
+        "userId": "b6cab487-0bd7-4d68-b307-95c655cdddbb",
+        "organisationId": "0126967773240442880",
+        "roles": [
+            "CONTENT_CREATOR",
+            "CONTENT_REVIEWER",
+            "CONTENT_CURATION",
+            "FLAG_REVIEWER",
+            "BOOK_CREATOR"
+        ]
+    }
+}'
+
+#################
+# Create another user 
+
+curl -X POST https://sunbirdbootcamp.ddns.net/api/user/v1/create \
+                 -H 'Cache-Control: no-cache' \
+                 -H 'Content-Type: application/json' \
+                 -H 'accept: application/json' \
+                 -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhYjQ5M2M3ZDkwNjI0OGY2ODI5ZWVmNDE0NzI0YzBiMSJ9.Em54h6odZMDyAnp0nKbOpZ7lop4yWbxYthJ7KNw0MAU' \
+                 -d '{               
+                         "request": {
+                             "firstName":"reviewer",
+                             "lastName":"reviewer",
+                             "userName":"reviewer",
+                             "password":"reviewer",
+                             "email":"reviewer@master.com",
+                             "phone":"8095477777",
+                             "channel": "testers",
+                             "emailVerified": true,
+                             "phoneVerified": true
+                         }
+                     }'
+
+curl -s -X POST  https://sunbirdbootcamp.ddns.net/auth/realms/sunbird/protocol/openid-connect/token   -H 'cache-control: no-cache'   -H 'content-type: application/x-www-form-urlencoded'   -H 'postman-token: 15d3852b-de08-ea78-3342-bfaf5d4d4f09'  --data  "client_id=admin-cli&username=admin&password=smy&grant_type=password" | jq -r '.access_token'
+
+curl -X POST \
+  https://sunbirdbootcamp.ddns.net/api/user/v1/role/assign \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhYjQ5M2M3ZDkwNjI0OGY2ODI5ZWVmNDE0NzI0YzBiMSJ9.Em54h6odZMDyAnp0nKbOpZ7lop4yWbxYthJ7KNw0MAU' \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 9c0f9079-7d1c-4080-936b-e27f18c70576' \
+  -H 'X-Consumer-ID: X-Consumer-ID' \
+  -H 'X-msgid: 8e27cbf5-e299-43b0-bca7-8347f7e5abcf' \
+  -H 'cache-control: no-cache' \
+  -H "x-authenticated-user-token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVT184aHJZRDJuOWxBcjhvUTZVRWdsb1VjVnhTVWlMMURuQV9raDc2eWhNIn0.eyJqdGkiOiJiMzk0ZWY5MC01OWIxLTRlNzAtYjk5ZS1iZjAzYmViNjgxYzIiLCJleHAiOjE1NDk3NDgwNDgsIm5iZiI6MCwiaWF0IjoxNTQ5NzI2NDQ4LCJpc3MiOiJodHRwczovL3N1bmJpcmRib290Y2FtcC5kZG5zLm5ldC9hdXRoL3JlYWxtcy9zdW5iaXJkIiwiYXVkIjoiYWRtaW4tY2xpIiwic3ViIjoiOTk0ZTFmNjYtNzI2OC00OGQ0LWE0NzUtNTZiZTgwOGMzNzExIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tY2xpIiwiYXV0aF90aW1lIjowLCJzZXNzaW9uX3N0YXRlIjoiNTEzNDc1ZTktM2ZkZS00MDI2LTg3OTQtMzUyZWJiZmJkYmMyIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6W10sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJlYWxtLW1hbmFnZW1lbnQiOnsicm9sZXMiOlsibWFuYWdlLXVzZXJzIiwidmlldy11c2VycyIsInF1ZXJ5LWdyb3VwcyIsInF1ZXJ5LXVzZXJzIl19fSwibmFtZSI6InNteSBraW5nIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4iLCJnaXZlbl9uYW1lIjoic215IiwiZmFtaWx5X25hbWUiOiJraW5nIiwiZW1haWwiOiJzbXlAa2luZ2tpbmcifQ.EQOCDZ-kgbSD0qXB9LdWWJ7v3Gic4T9-KSd-7gbeCLNK0QStDqbOIZKtWpjk1meRRFn0SF5pc0uCyjW7M4W4NxlFecDxmPu_1pClLCNz-9eGf79cFrMtYso2J9ethVwDEUsb3sruPFA1C92_Sy5SOwAsHaFB16kve4pFVxFm3Hw4v_8zWM4wFYFMWwzjCOlEp9TwdCqbuc2Gi3NNZTVAlChxeM0JP4CVN2OiKyLvq911ZBXfNiTjLAbSQ2iDQGWvtMrWP7wYt99ifAM0NH-FVzRb07awPEeqauOP0DDGNSwLk83-zEu9O-_rIAzvks7TYJE2_VClMi4RpAdEPAPQcA" \
+  -d '{
+    "request": {
+        "userId": "7e551bfe-8fbf-4844-8902-7d6f7c6d8fcb",
+        "organisationId": "0126953623207854080",
+        "roles": [
+            "CONTENT_CREATOR",
+            "CONTENT_REVIEWER",
+            "CONTENT_CURATION",
+            "FLAG_REVIEWER",
+            "BOOK_CREATOR"
+        ]
+    }
+}'
+
+###########################
+# Create master categories by running Script ()
+
+###########################
+# Create Frameworks
+# Update config.ini file with appropriate values and run ./Framework.sh file
+
+###########################
+# Create Forms by updating forms script
