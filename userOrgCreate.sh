@@ -171,10 +171,12 @@ createOrgInCassandra() {
         cqlsh -e "$sunbird_cassandra_org_insert_query"
 }
 
-# creates a record in ES - index=searchindex, type=org
+# creates a record in ES - 
+index=org
+type=_doc
 createOrgInES() {
         es_host="$(echo "$sunbird_es_host" | cut -d ',' -f1)"
-        es_create_org_response=$(curl -s -X PUT $es_host:9200/searchindex/org/$sunbird_custodian_tenant_id \
+        es_create_org_response=$(curl -s -X PUT $es_host:9200/${index}/${type}/$sunbird_custodian_tenant_id \
                 -H 'cache-control: no-cache' \
                 -H 'content-type: application/json' \
                 -d '{
@@ -198,7 +200,7 @@ createOrgInES() {
 # fetch operation happens from the first host in the list
 fetchOrgFromES() {
         es_host="$(echo "$sunbird_es_host" | cut -d ',' -f1)"
-        es_fetch_org_response=$(curl -s -X GET $es_host:9200/searchindex/org/$sunbird_custodian_tenant_id)
+        es_fetch_org_response=$(curl -s -X GET $es_host:9200/${index}/${type}/$sunbird_custodian_tenant_id)
 }
 
 # generates keycloak user token with the configured user credentials
@@ -363,7 +365,7 @@ then
             setValueInSystemSettings "systemInitialisationStatus" "CUSTODIAN_ORG_CREATED";
         fi
 else
-        echo "System Initialisation failed. Unable to fetch data from Elastic Search - index=searchindex, type=org";
+        echo "System Initialisation failed. Unable to fetch data from Elastic Search - index=${index}, type=org";
         exit 1;
 fi
 
