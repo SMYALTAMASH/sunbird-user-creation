@@ -42,6 +42,8 @@ username="testers"                                           # Username to login
 password="testers"                                              # Password to login
 email="testers.smy@gmail.com"                                     # Email address of user being added
 phoneNumber=8295744729                                          # Valid 10 digit number
+index=org                                                       # searchindex for versions below release-1.15 
+type=_doc                                                       # org for versions below release-1.15 
 
 ### End of Variables ###
 
@@ -172,8 +174,6 @@ createOrgInCassandra() {
 }
 
 # creates a record in ES - 
-index=org
-type=_doc
 createOrgInES() {
         es_host="$(echo "$sunbird_es_host" | cut -d ',' -f1)"
         es_create_org_response=$(curl -s -X PUT $es_host:9200/${index}/${type}/$sunbird_custodian_tenant_id \
